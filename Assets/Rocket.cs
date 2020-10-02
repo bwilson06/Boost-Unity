@@ -5,7 +5,7 @@ using UnityEngine;
 public class Rocket : MonoBehaviour
 {
     [SerializeField] float rcsThrust = 100f;
-    [SerializeField] float thrust = 1f;
+    [SerializeField] float thrust = 100f;
     Rigidbody rigidBody;
     AudioSource audioSource;
 
@@ -34,9 +34,9 @@ public class Rocket : MonoBehaviour
     }
 
     void Thrust () {
-        float thrustThisFrame = thrust * Time.deltaTime;
+        rigidBody.AddForce(Physics.gravity * 1.5f, ForceMode.Acceleration);
         if (Input.GetKey(KeyCode.Space)){
-            rigidBody.AddRelativeForce(Vector3.up * thrustThisFrame);
+            rigidBody.AddRelativeForce(Vector3.up * thrust);
             if (!audioSource.isPlaying){
                 audioSource.Play();
             }  
