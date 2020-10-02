@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
+    [SerializeField] float rcsThrust = 100f;
+    [SerializeField] float thrust = 1f;
     Rigidbody rigidBody;
     AudioSource audioSource;
 
@@ -14,27 +16,39 @@ public class Rocket : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    void ProcessUpdate () {
+    void Rotate () {
+        float rotationSpeed = rcsThrust * Time.deltaTime;
+        rigidBody.freezeRotation = false;
+        if (Input.GetKey(KeyCode.A)){
+            rigidBody.freezeRotation = true;
+            transform.Rotate(Vector3.forward * rotationSpeed);
+        }
+        if (Input.GetKey(KeyCode.D)){
+            rigidBody.freezeRotation = true;
+            transform.Rotate(-Vector3.forward * rotationSpeed);
+        }
+    }
+
+    void OnCollisionEnter(Collision collision) {
+        print("collided");
+    }
+
+    void Thrust () {
+        float thrustThisFrame = thrust * Time.deltaTime;
         if (Input.GetKey(KeyCode.Space)){
-            rigidBody.AddRelativeForce(Vector3.up);
+            rigidBody.AddRelativeForce(Vector3.up * thrustThisFrame);
             if (!audioSource.isPlaying){
                 audioSource.Play();
-            }
-            
+            }  
         }else{
                 audioSource.Stop();
             }
-        if (Input.GetKey(KeyCode.A)){
-            transform.Rotate(Vector3.forward);
-        }
-        if (Input.GetKey(KeyCode.D)){
-            transform.Rotate(-Vector3.forward);
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        ProcessUpdate();
+        Thrust();
+        Rotate();
     }
 }
