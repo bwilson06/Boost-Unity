@@ -214,6 +214,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lander
       objectReference: {fileID: 0}
+    - target: {fileID: 6871198501737378496, guid: 322c1d41864564af7ba738742e0b1f8e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Win
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 322c1d41864564af7ba738742e0b1f8e, type: 3}
 --- !u!1001 &2081514561
@@ -609,6 +614,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 80ca04603b1c941a7bf262ae21dc5d38, type: 2}
+    - target: {fileID: 3487855506855966504, guid: 5490fb69a8b7841d6b185928886519b7,
+        type: 3}
+      propertyPath: mainEngine
+      value: 
+      objectReference: {fileID: 8300000, guid: 545a602beae7a4bbe9bfe91c43d177ad, type: 3}
     - target: {fileID: 3755026559300128478, guid: 5490fb69a8b7841d6b185928886519b7,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -712,7 +722,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a7e53c9b2fc014fab9eab91b1f82a2fe, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1.63
@@ -798,20 +808,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &5192736631641556414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5192736631641556412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 824da704441034c6896849ce186a7ed0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rcsThrust: 80
-  thrust: 60
 --- !u!54 &5192736631641556415
 Rigidbody:
   m_ObjectHideFlags: 0
