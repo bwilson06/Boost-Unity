@@ -10,6 +10,12 @@ public class Rocket : MonoBehaviour
     [SerializeField] AudioClip mainEngine;
     [SerializeField] AudioClip success;
     [SerializeField] AudioClip death;
+    [SerializeField] ParticleSystem successParticles;
+    [SerializeField] ParticleSystem thrustParticles;
+    [SerializeField] ParticleSystem deathParticles;
+    [SerializeField] int level = 0;
+
+    [SerializeField] float gravityMultiplier = 1f;
     Rigidbody rigidBody;
     AudioSource audioSource;
     public enum State { Alive, Dying, Transcending }
@@ -47,12 +53,14 @@ public class Rocket : MonoBehaviour
                 break;
             case "Win":
             audioSource.PlayOneShot(success);
+            successParticles.Play();
             state =  State.Transcending;
             Invoke("LoadNextScene", 1f);
                 break;
             default:
             audioSource.Stop();
             audioSource.PlayOneShot(death);
+            deathParticles.Play();
             state = State.Dying;
             Invoke("LoadFirstScene", .6f);
                 break;
@@ -61,7 +69,12 @@ public class Rocket : MonoBehaviour
     }
 
     void LoadNextScene () {
-        SceneManager.LoadScene(1);
+        level = level + 1;
+        if (level < 2){
+        SceneManager.LoadScene(level);
+        }else{
+        SceneManager.LoadScene(1); 
+        }
     }
 
     void LoadFirstScene () {
@@ -69,15 +82,26 @@ public class Rocket : MonoBehaviour
     }
 
     void Thrust () {
-        rigidBody.AddForce(Physics.gravity * 1.5f, ForceMode.Acceleration);
+        rigidBody.AddForce(Physics.gravity * gravityMultiplier, ForceMode.Acceleration);
         if (Input.GetKey(KeyCode.Space)){
-            rigidBody.AddRelativeForce(Vector3.up * thrust);
+            rigidBody.AddRelativeForce(Vector3.up * thrust * Time.deltaTime);
             if (!audioSource.isPlaying){
                 audioSource.PlayOneShot(mainEngine);
+                thrustParticles.Play();
             }  
         }else{
                 audioSource.Stop();
+                thrustParticles.Stop();
             }
+    }
+
+    void deBug() {
+        if (Input.GetKey(KeyCode.L)){
+            if (level == 0){
+                level = level + 1;
+                SceneManager.LoadScene(level);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -86,6 +110,7 @@ public class Rocket : MonoBehaviour
         if (state == State.Alive){
         Thrust();
         Rotate();
+        deBug();
         }
     }
 }
